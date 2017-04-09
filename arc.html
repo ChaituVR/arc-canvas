@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    
+
+        .padding-20 {
+            padding: 20px 20px 20px 20px;
+        }
+        
+        .padding-28 {
+            padding: 28px 28px 28px 28px;
+        }
+        
+        .panel-container {
+            border-radius: 5px;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            color: #333;
+            box-shadow: 0 9px 12px rgba(153, 153, 153, 0.349019607843137);
+        }
+        
+        .circle-30 {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            border: solid 3px white;
+            font-family: Segoe UI Light;
+            cursor: pointer;
+        }
+        
+        .circle-50 {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            border: solid 3px white;
+            font-family: Segoe UI Light;
+            cursor: pointer;
+        }
+        
+        .circle-errored {
+            border-color: #E6E6E6;
+            background-color: #FFFFFF;
+            color: #C75757;
+        }
+        
+        .circle-warning {
+            border-color: #E6E6E6;
+            background-color: #FFFFFF;
+            color: #F7931E;
+        }
+        
+        .circle-complete {
+            border-color: #E6E6E6;
+            background-color: #FFFFFF;
+            color: #009245;
+        }
+        
+        .circle-empty {
+            border-color: #E6E6E6;
+            background-color: #FAFAFA;
+        }
+        
+        .circle-unknown {
+            border-color: #CCCCCC;
+            background-color: #E6E6E6;
+        }
+        
+        .circle-known {
+            border-color: #007DC3;
+            background-color: #FFFFFF;
+        }
+        
+        .circle-processing {
+            border-color: #007DC3;
+            background-color: #A6E1F5;
+        }
+        
+        .rack-bg-gradient {
+            background-color: #0f5796;
+            filter: progid: DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#0f5796, endColorstr=#f2f2f2);
+            background-image: -moz-linear-gradient(top, #0f5796 0%, #f2f2f2 100%);
+            background-image: -webkit-linear-gradient(top, #0f5796 0%, #f2f2f2 100%);
+            background-image: -ms-linear-gradient(top, #0f5796 0%, #f2f2f2 100%);
+            background-image: linear-gradient(top, #0f5796 0%, #f2f2f2 100%);
+            background-image: -o-linear-gradient(top, #0f5796 0%, #f2f2f2 100%);
+            background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #0f5796), color-stop(100%, #f2f2f2));
+        }
+        
+        table {
+            border-collapse: collapse;
+        }
+        
+        td {
+            padding-top: .5em;
+            padding-bottom: .5em;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <div>
+            <div class="rack-bg-gradient">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default panel-container">
+                            <div id="ways" style="width:1000px;margin:0 auto;">
+                                <canvas id="canvas1" width="1000" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default panel-container">
+                            <div id="ways" style="width:1000px;margin:0 auto;">
+                                <canvas id="canvas2" width="1000" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="padding-20">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default panel-container">
+                                
+                                <div class="row" style="padding:10px 10px 10px 10px">
+                                    <div class="col-md-12">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td align="center"></td>
+                                                <td align="center">
+                                                    1
+                                                    <br>
+                                                </td>
+                                                <td align="center">2</td>
+                                                <td align="center">3</td>
+                                                <td align="center">4</td>
+                                                <td align="center">5</td>
+                                                <td align="center">6</td>
+                                                <td align="center">7</td>
+                                                <td align="center">8</td>
+                                                <td align="center">9</td>
+                                                <td align="center">10</td>
+                                                <td align="center">11</td>
+                                                <td align="center">12</td>
+                                                <td align="center">13</td>
+                                                <td align="center">14</td>
+                                                <td align="center">15</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    A
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-errored">
+                                                <i class="fa fa-exclamation-circle fa-4" style="font-size:20px;"></i>
+                                            </button>
+                                                    <br>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-errored">
+                                                <i class="fa fa-exclamation-circle fa-4" style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-warning">
+                                                <i class="fa fa-exclamation-triangle fa-4" style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-empty">
+                                            </button>
+                                                </td>
+                                                <td align="center"><button type="button" class="circle-50 circle-complete">
+                                                               <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button></td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-empty">
+                                                
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                                <!--<i class="fa fa-check " style="font-size:20px;"></i>-->
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">
+                                                    B
+                                                    <br>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-complete">
+                                                <i class="fa fa-check " style="font-size:20px;"></i>
+                                            </button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-processing"></button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-known"></button>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="circle-50 circle-known"></button>
+                                                </td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center">C</td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                                <td align="center"><button type="button" class="circle-50 circle-unknown"></button></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row" style="padding:10px 10px 10px 10px">
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="right">
+                                                <button class="circle-30 circle-processing"></button>
+                                            </td>
+                                            <td align="left"> Processing</td>
+                                            <td align="right"><button class="circle-30 circle-known"></button></td>
+                                            <td align="left"> Known</td>
+                                            <td align="right"><button class="circle-30 circle-unknown"></button></td>
+                                            <td align="left"> Unknown</td>
+                                            <td align="right"><button class="circle-30 circle-empty"></button> </td>
+                                            <td align="left"> Empty</td>
+                                            <td align="right">
+                                                <button class="circle-30 circle-complete">
+                                        <i class="fa fa-check " style="font-size:16px;"></i>
+                                        </button>
+                                            </td>
+                                            <td align="left"> Complete</td>
+                                            <td align="right"><button class="circle-30 circle-warning">
+                                        <i class="fa fa-exclamation-triangle fa-4" style="font-size:16px;"></i>
+                                        </button></td>
+                                            <td align="left"> Warning</td>
+                                            <td align="right"><button class="circle-30 circle-errored"><i class="fa fa-exclamation-circle fa-4" style="font-size:16px"></i></button> </td>
+                                            <td align="left"> Errored</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+        
+
+	function getAlphabet(num){
+        	var alphabets =  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+	        return alphabets[num];
+    }
+    drawCanvas('canvas1', 20, 0.5, 16, 4, 10, 12);
+    drawCanvas('canvas2', 75, 0.5, 5, 2, 10, 12);
+    
+	function drawCanvas(canvas, radius, circleBorder, cols, rows, rowPitch, columnPitch){
+        var canvas = document.getElementById(canvas);
+        var context = canvas.getContext('2d');
+        context.fillStyle =  '#fefefe ';        
+	
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+		
+		        var offsetX = radius * 2 + circleBorder + rowPitch;
+                var offsetY = radius * 2 + circleBorder + columnPitch;
+                  
+                var center = radius + circleBorder;
+                var x = j * offsetX + center;
+                var y = i * offsetY + center;
+
+		        if (i === 0 && j === 0) {
+                    var text =  ' ';
+                    context.fillText(text,radius,radius);
+                } else if (i === 0 && j !== 0) {
+                        context.font =  '12px Arial ';
+                        context.textAlign =  'center ';
+                        var text = j.toString();
+                        context.fillStyle = '#333';
+                        context.fillText(text, x,radius);
+                } else if (i !== 0 && j === 0) {
+                        context.font =  '12px Arial ';
+                        var text = getAlphabet(i - 1);
+                        context.textAlign =  'center ';
+                        console.log(text);
+                        context.fillStyle = '#333';
+                        context.fillText(text,radius, y);
+                } else {
+                        context.beginPath();
+                        context.arc(x, y,radius, 0, 2 * Math.PI, false);
+                        context.fillStyle = '#E6E6E6';
+                        context.fill();
+                        context.lineWidth = circleBorder;
+                        context.strokeStyle = '#CCCCCC';
+                        context.stroke();
+        	            }		
+        	    }
+        	}
+	}
+    </script>
+</body>
+
+</html>
