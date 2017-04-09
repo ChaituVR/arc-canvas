@@ -17,16 +17,18 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
-    
+        #canvas1,#canvas2,#canvas3 {
+          border:solid lightgreen;
+        }
 
         .padding-20 {
             padding: 20px 20px 20px 20px;
         }
-        
+
         .padding-28 {
             padding: 28px 28px 28px 28px;
         }
-        
+
         .panel-container {
             border-radius: 5px;
             border: 1px solid #e6e6e6;
@@ -34,7 +36,7 @@
             color: #333;
             box-shadow: 0 9px 12px rgba(153, 153, 153, 0.349019607843137);
         }
-        
+
         .circle-30 {
             width: 30px;
             height: 30px;
@@ -44,7 +46,7 @@
             font-family: Segoe UI Light;
             cursor: pointer;
         }
-        
+
         .circle-50 {
             width: 50px;
             height: 50px;
@@ -54,45 +56,45 @@
             font-family: Segoe UI Light;
             cursor: pointer;
         }
-        
+
         .circle-errored {
             border-color: #E6E6E6;
             background-color: #FFFFFF;
             color: #C75757;
         }
-        
+
         .circle-warning {
             border-color: #E6E6E6;
             background-color: #FFFFFF;
             color: #F7931E;
         }
-        
+
         .circle-complete {
             border-color: #E6E6E6;
             background-color: #FFFFFF;
             color: #009245;
         }
-        
+
         .circle-empty {
             border-color: #E6E6E6;
             background-color: #FAFAFA;
         }
-        
+
         .circle-unknown {
             border-color: #CCCCCC;
             background-color: #E6E6E6;
         }
-        
+
         .circle-known {
             border-color: #007DC3;
             background-color: #FFFFFF;
         }
-        
+
         .circle-processing {
             border-color: #007DC3;
             background-color: #A6E1F5;
         }
-        
+
         .rack-bg-gradient {
             background-color: #0f5796;
             filter: progid: DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#0f5796, endColorstr=#f2f2f2);
@@ -103,11 +105,11 @@
             background-image: -o-linear-gradient(top, #0f5796 0%, #f2f2f2 100%);
             background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #0f5796), color-stop(100%, #f2f2f2));
         }
-        
+
         table {
             border-collapse: collapse;
         }
-        
+
         td {
             padding-top: .5em;
             padding-bottom: .5em;
@@ -140,11 +142,22 @@
                     </div>
                 </div>
                 <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default panel-container">
+                            <div id="ways" style="width:1000px;margin:0 auto;">
+                                <canvas id="canvas3" width="1000" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
                 <div class="padding-20">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-default panel-container">
-                                
+
                                 <div class="row" style="padding:10px 10px 10px 10px">
                                     <div class="col-md-12">
                                         <table style="width:100%">
@@ -209,7 +222,7 @@
                                             </button></td>
                                                 <td align="center">
                                                     <button type="button" class="circle-50 circle-empty">
-                                                
+
                                             </button>
                                                 </td>
                                                 <td align="center">
@@ -337,29 +350,31 @@
             </div>
         </div>
 <script>
-        
+
 
 	function getAlphabet(num){
         	var alphabets =  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 	        return alphabets[num];
     }
-    drawCanvas('canvas1', 20, 0.5, 16, 4, 10, 12);
-    drawCanvas('canvas2', 75, 0.5, 5, 2, 10, 12);
-    
+    drawCanvas('canvas1', 20, 5, 16, 4, 10, 12);
+    drawCanvas('canvas2', 105, 5, 5, 2, 10, 12);
+
+    drawCanvas('canvas3', 125, 5, 4, 2, 10, 12);
+
 	function drawCanvas(canvas, radius, circleBorder, cols, rows, rowPitch, columnPitch){
         var canvas = document.getElementById(canvas);
         var context = canvas.getContext('2d');
-        context.fillStyle =  '#fefefe ';        
-	
+        context.fillStyle =  '#fefefe ';
+
         for (var i = 0; i < rows; i++) {
             for (var j = 0; j < cols; j++) {
-		
+
 		        var offsetX = radius * 2 + circleBorder + rowPitch;
                 var offsetY = radius * 2 + circleBorder + columnPitch;
-                  
-                var center = radius + circleBorder;
-                var x = j * offsetX + center;
-                var y = i * offsetY + center;
+
+                // var center = radius + circleBorder;
+                var x = j * offsetX + 50 - radius;
+                var y = i * offsetY + 30 - radius;
 
 		        if (i === 0 && j === 0) {
                     var text =  ' ';
@@ -369,25 +384,29 @@
                         context.textAlign =  'center ';
                         var text = j.toString();
                         context.fillStyle = '#333';
-                        context.fillText(text, x,radius);
+                        context.fillText(text, x,30);
                 } else if (i !== 0 && j === 0) {
                         context.font =  '12px Arial ';
                         var text = getAlphabet(i - 1);
                         context.textAlign =  'center ';
                         console.log(text);
                         context.fillStyle = '#333';
-                        context.fillText(text,radius, y);
+                        context.fillText(text,30, y);
                 } else {
                         context.beginPath();
                         context.arc(x, y,radius, 0, 2 * Math.PI, false);
                         context.fillStyle = '#E6E6E6';
-                        context.fill();
+                        // context.fill();
+                        context.font='14px FontAwesome';
+                        context.fillStyle = 'green';
+                        // &#xf071;
+                        context.fillText('\uF071',x-7,y); // 7 for 14 font size
                         context.lineWidth = circleBorder;
                         context.strokeStyle = '#CCCCCC';
                         context.stroke();
-        	            }		
+        	            }
         	    }
-        	}            
+        	}
 	}
     </script>
 </body>
