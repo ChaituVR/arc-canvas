@@ -365,6 +365,7 @@
 	function drawCanvas(canvas, radius, circleBorder, cols, rows, rowPitch, columnPitch){
         var canvas = document.getElementById(canvas);
         var context = canvas.getContext('2d');
+        var elements = [];
         context.fillStyle =  '#fefefe ';
 
         for (var i = 0; i < rows; i++) {
@@ -395,6 +396,12 @@
                         context.fillText(text,30, y);
                 } else {
                         context.beginPath();
+                        elements.push({
+                            id : canvas.id+'-'+i+'-'+j,
+                            radius : radius+circleBorder,
+                            top: y,
+                            left: x
+                        });
                         context.arc(x, y,radius, 0, 2 * Math.PI, false);
                         context.fillStyle = '#E6E6E6';
                         // context.fill();
@@ -408,7 +415,23 @@
         	            }
         	    }
         	}
+          canvas.addEventListener('click', function(event) {
+            canvasLeft = canvas.offsetLeft
+                canvasTop = canvas.offsetTop
+                 x = event.pageX - canvasLeft
+                    y = event.pageY - canvasTop;
+                  // console.log(x,y)
+                  // Collision detection between clicked offset and element.
+                  elements.every(function(element) {
+                    // console.log(element)
+                      if (Math.pow(x-element.left,2)+Math.pow(y-element.top,2) <= Math.pow(element.radius,2)) {
+                          alert(element.id);
+                      }
+                      return true;
+                  });
+});
 	}
+
     </script>
 </body>
 
