@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
 
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -398,9 +398,10 @@
                         context.beginPath();
                         elements.push({
                             id : canvas.id+'-'+i+'-'+j,
-                            radius : radius+circleBorder,
-                            top: y,
-                            left: x
+                            radius : radius,
+                            circleStroke : circleBorder,
+                            y: y,
+                            x: x
                         });
                         context.arc(x, y,radius, 0, 2 * Math.PI, false);
                         context.fillStyle = '#E6E6E6';
@@ -415,21 +416,30 @@
         	            }
         	    }
         	}
-          canvas.addEventListener('click', function(event) {
-            canvasLeft = canvas.offsetLeft
-                canvasTop = canvas.offsetTop
-                 x = event.pageX - canvasLeft
-                    y = event.pageY - canvasTop;
-                  // console.log(x,y)
-                  // Collision detection between clicked offset and element.
-                  elements.every(function(element) {
-                    // console.log(element)
-                      if (Math.pow(x-element.left,2)+Math.pow(y-element.top,2) <= Math.pow(element.radius,2)) {
-                          alert(element.id);
-                      }
-                      return true;
-                  });
-});
+          canvas.addEventListener('mousemove',mouseOperations);
+          canvas.addEventListener('click', mouseOperations);
+
+          function mouseOperations(event){
+              canvasLeft = canvas.offsetLeft
+              canvasTop = canvas.offsetTop
+              x = event.pageX - canvasLeft
+              y = event.pageY - canvasTop;
+              cursorChange = false;
+              // Collision detection between clicked offset and element.
+              elements.every(function(element) {
+                  if (Math.pow(x-element.x,2)+Math.pow(y-element.y,2) <= Math.pow(element.radius+element.circleStroke,2)) {
+                       cursorChange = true;
+                       if(event.type == "click"){
+                           alert("x - "+ element.x +"\ny - "+ element.y+"\nradius - "+ element.radius);
+                        }
+                        return false;
+                   }
+                   return true;
+              });
+              if(event.type == "mousemove" ){
+                  canvas.style.cursor = cursorChange === true ? "pointer":"default";
+              }
+          }
 	}
 
     </script>
